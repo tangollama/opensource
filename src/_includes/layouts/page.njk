@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+---
+
+<div class="page-wrapper">
+  {% if showSidebar %}
+  <div class="page-with-sidebar">
+    <aside class="sidebar" aria-label="Documentation navigation">
+      {% include "partials/doc-nav.njk" %}
+    </aside>
+    <article class="page-content prose">
+      {% if title %}
+      <h1>{{ title }}</h1>
+      {% endif %}
+      {{ content | safe }}
+    </article>
+  </div>
+  {% else %}
+  <article class="page-content prose">
+    {% if title %}
+    <h1>{{ title }}</h1>
+    {% endif %}
+    {{ content | safe }}
+  </article>
+  {% endif %}
+</div>

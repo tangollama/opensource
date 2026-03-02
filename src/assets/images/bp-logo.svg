@@ -1,0 +1,11 @@
+<!-- Placeholder BibleProject logo icon (blue on transparent).
+     Replace this file with the official SVG from BibleProject's brand assets.
+     Brand assets: https://bibleproject.com/about/brand-guidelines/
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+  <!-- Simple geometric book icon as placeholder -->
+  <rect width="36" height="36" rx="6" fill="#2563eb"/>
+  <path d="M9 10h8v16H9a1 1 0 01-1-1V11a1 1 0 011-1z" fill="white" opacity="0.9"/>
+  <path d="M19 10h8a1 1 0 011 1v14a1 1 0 01-1 1h-8V10z" fill="white" opacity="0.7"/>
+  <line x1="18" y1="10" x2="18" y2="26" stroke="#2563eb" stroke-width="1"/>
+</svg>

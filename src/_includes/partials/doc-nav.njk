@@ -1,0 +1,17 @@
+{% set docPages = collections.docs | sort(false, false, 'data.order') %}
+<nav aria-label="Documentation pages">
+  <p class="sidebar-label">Documentation</p>
+  <ul class="sidebar-list" role="list">
+    {% for doc in docPages %}
+    <li>
+      <a
+        href="{{ doc.url }}"
+        class="sidebar-link{% if doc.url == page.url %} sidebar-link--active{% endif %}"
+        {% if doc.url == page.url %}aria-current="page"{% endif %}
+      >
+        {{ doc.data.title }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>

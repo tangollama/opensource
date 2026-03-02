@@ -1,0 +1,20 @@
+[
+  {
+    "name": "fonts",
+    "description": "Self-hosted web font files from BibleProject's brand system, including WOFF2 packages ready for use in web projects.",
+    "url": "https://github.com/bibleproject/fonts",
+    "tags": ["fonts", "design", "brand"]
+  },
+  {
+    "name": "design-tokens",
+    "description": "Design tokens capturing BibleProject's color palette, typography scale, and spacing system in a format consumable by any platform.",
+    "url": "https://github.com/bibleproject/design-tokens",
+    "tags": ["design", "tokens", "css"]
+  },
+  {
+    "name": "icon-library",
+    "description": "SVG icon set used across BibleProject's digital products, optimized and ready to drop into web or native applications.",
+    "url": "https://github.com/bibleproject/icon-library",
+    "tags": ["icons", "svg", "design"]
+  }
+]

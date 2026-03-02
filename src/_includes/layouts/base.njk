@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{{ description or site.description }}" />
+
+  <title>{% if title %}{{ title }} — {% endif %}{{ site.title }}</title>
+
+  <!-- Preconnect hints for any external resources -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Self-hosted fonts (place .woff2 files in /assets/fonts/) -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <!-- Syntax highlighting theme (injected by eleventy-plugin-syntaxhighlight) -->
+  <link rel="stylesheet" href="/assets/css/prism-theme.css" />
+
+  <!-- Favicon (replace with actual BP favicon) -->
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  {% include "partials/header.njk" %}
+
+  <main id="main-content">
+    {{ content | safe }}
+  </main>
+
+  {% include "partials/footer.njk" %}
+</body>
+</html>

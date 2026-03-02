@@ -1,0 +1,51 @@
+---
+layout: layouts/base.njk
+title: Repositories
+description: Public GitHub repositories from BibleProject
+---
+
+<div class="page-wrapper">
+  <div class="container">
+
+    <header class="section-header">
+      <h1 class="section-title">Repositories</h1>
+      <p class="section-desc">
+        Open source projects published by BibleProject on GitHub.
+        Each repository includes a README with usage instructions.
+      </p>
+    </header>
+
+    <div class="repo-grid">
+      {% for repo in repos %}
+      <article class="repo-card">
+        <div class="repo-card-header">
+          <h2 class="repo-card-name">{{ repo.name }}</h2>
+        </div>
+        <p class="repo-card-desc">{{ repo.description }}</p>
+        {% if repo.tags %}
+        <ul class="repo-card-tags" aria-label="Tags">
+          {% for tag in repo.tags %}
+          <li><span class="tag">{{ tag }}</span></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <a
+          href="{{ repo.url }}"
+          class="btn btn-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View {{ repo.name }} on GitHub (opens in new tab)"
+        >
+          View on GitHub ↗
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+
+    <p style="margin-top: 3rem; color: var(--color-text-muted); font-size: 0.9rem;">
+      See all BibleProject repositories on
+      <a href="{{ site.githubOrg }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </p>
+
+  </div>
+</div>

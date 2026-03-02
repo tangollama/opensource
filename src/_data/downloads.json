@@ -1,0 +1,18 @@
+[
+  {
+    "name": "BibleProject Brand Fonts",
+    "description": "Self-hosted WOFF2 font files from BibleProject's brand system. Includes all weights and styles for both display and body typefaces.",
+    "filename": "bp-fonts.zip",
+    "size": "—",
+    "attribution": "Fonts are provided for use in projects that represent or reference BibleProject. Please review the BibleProject brand guidelines before use.",
+    "tags": ["fonts", "brand"]
+  },
+  {
+    "name": "BibleProject Logo Pack",
+    "description": "SVG and PNG versions of the BibleProject logo in both blue-on-white and white-on-dark variants, with clear space guidelines.",
+    "filename": "bp-logos.zip",
+    "size": "—",
+    "attribution": "Logo usage is subject to BibleProject's brand guidelines. Do not alter, outline, or place content on top of the logo.",
+    "tags": ["logo", "brand", "svg"]
+  }
+]
