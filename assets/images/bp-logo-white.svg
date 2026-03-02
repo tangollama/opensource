@@ -1,0 +1,8 @@
+<!-- Placeholder BibleProject logo icon (white on transparent) for dark backgrounds.
+     Replace with the official white SVG from BibleProject's brand assets.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+  <path d="M4 7h8v14H4a1 1 0 01-1-1V8a1 1 0 011-1z" fill="white" opacity="0.9"/>
+  <path d="M16 7h8a1 1 0 011 1v12a1 1 0 01-1 1h-8V7z" fill="white" opacity="0.7"/>
+  <line x1="14" y1="7" x2="14" y2="21" stroke="white" stroke-width="1" opacity="0.4"/>
+</svg>

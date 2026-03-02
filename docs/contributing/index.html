@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How to contribute to BibleProject open source projects" />
+
+  <title>Contributing — BibleProject Open Source</title>
+
+  <!-- Preconnect hints for any external resources -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Self-hosted fonts (place .woff2 files in /assets/fonts/) -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <!-- Syntax highlighting theme (injected by eleventy-plugin-syntaxhighlight) -->
+  <link rel="stylesheet" href="/assets/css/prism-theme.css" />
+
+  <!-- Favicon (replace with actual BP favicon) -->
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="site-logo" aria-label="BibleProject Open Source — Home">
+      <!-- BibleProject blue icon; swap src for the actual SVG/PNG from brand assets -->
+      <img
+        src="/assets/images/bp-logo.svg"
+        alt="BibleProject"
+        width="36"
+        height="36"
+        class="logo-icon"
+      />
+      <span class="logo-text">BibleProject <span class="logo-text--light">Open Source</span></span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+  <ul class="nav-list" role="list">
+    <li>
+      <a href="/repos/" class="nav-link">
+        Repos
+      </a>
+    </li>
+    <li>
+      <a href="/downloads/" class="nav-link">
+        Downloads
+      </a>
+    </li>
+    <li>
+      <a href="/docs/" class="nav-link nav-link--active">
+        Docs
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://github.com/bibleproject"
+        class="nav-link nav-link--external"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="BibleProject on GitHub (opens in new tab)"
+      >
+        GitHub ↗
+      </a>
+    </li>
+  </ul>
+</nav>
+
+  </div>
+</header>
+
+
+  <main id="main-content">
+    
+<div class="page-wrapper">
+  
+  <div class="page-with-sidebar">
+    <aside class="sidebar" aria-label="Documentation navigation">
+      
+<nav aria-label="Documentation pages">
+  <p class="sidebar-label">Documentation</p>
+  <ul class="sidebar-list" role="list">
+    
+    <li>
+      <a
+        href="/docs/"
+        class="sidebar-link"
+        
+      >
+        Documentation
+      </a>
+    </li>
+    
+    <li>
+      <a
+        href="/docs/getting-started/"
+        class="sidebar-link"
+        
+      >
+        Getting Started
+      </a>
+    </li>
+    
+    <li>
+      <a
+        href="/docs/contributing/"
+        class="sidebar-link sidebar-link--active"
+        aria-current="page"
+      >
+        Contributing
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+    </aside>
+    <article class="page-content prose">
+      
+      <h1>Contributing</h1>
+      
+      <h2 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h2>
+<p>Contributions to BibleProject open source repositories are welcome.
+This page covers the basics of how to report issues, propose changes, and submit pull requests.</p>
+<h2 id="reporting-issues" tabindex="-1"><a class="header-anchor" href="#reporting-issues">Reporting issues</a></h2>
+<p>Found a bug or have a question? Open an issue on the relevant GitHub repository:</p>
+<ol>
+<li>Navigate to the repo on <a href="https://github.com/bibleproject">GitHub</a></li>
+<li>Click <strong>Issues → New issue</strong></li>
+<li>Use a clear, descriptive title</li>
+<li>Include steps to reproduce (for bugs) or a clear description (for feature requests)</li>
+</ol>
+<h2 id="submitting-pull-requests" tabindex="-1"><a class="header-anchor" href="#submitting-pull-requests">Submitting pull requests</a></h2>
+<h3 id="1-fork-the-repository" tabindex="-1"><a class="header-anchor" href="#1-fork-the-repository">1. Fork the repository</a></h3>
+<p>Click <strong>Fork</strong> on the GitHub repository page to create your own copy.</p>
+<h3 id="2-clone-your-fork" tabindex="-1"><a class="header-anchor" href="#2-clone-your-fork">2. Clone your fork</a></h3>
+<pre class="language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/your-username/repo-name.git
+<span class="token builtin class-name">cd</span> repo-name</code></pre>
+<h3 id="3-create-a-branch" tabindex="-1"><a class="header-anchor" href="#3-create-a-branch">3. Create a branch</a></h3>
+<pre class="language-bash"><code class="language-bash"><span class="token function">git</span> checkout <span class="token parameter variable">-b</span> feat/your-feature-name</code></pre>
+<p>Use a descriptive prefix:</p>
+<ul>
+<li><code>feat/</code> — new feature</li>
+<li><code>fix/</code> — bug fix</li>
+<li><code>docs/</code> — documentation changes</li>
+<li><code>chore/</code> — maintenance (dependency updates, build config)</li>
+</ul>
+<h3 id="4-make-your-changes" tabindex="-1"><a class="header-anchor" href="#4-make-your-changes">4. Make your changes</a></h3>
+<ul>
+<li>Keep changes focused — one logical change per pull request</li>
+<li>Follow the coding conventions already present in the project</li>
+<li>Update documentation if your change affects public-facing behavior</li>
+</ul>
+<h3 id="5-open-a-pull-request" tabindex="-1"><a class="header-anchor" href="#5-open-a-pull-request">5. Open a pull request</a></h3>
+<p>Push your branch and open a PR against the <code>main</code> branch of the upstream repository.
+Fill in the PR template — describe <em>what</em> changed and <em>why</em>.</p>
+<h2 id="code-of-conduct" tabindex="-1"><a class="header-anchor" href="#code-of-conduct">Code of conduct</a></h2>
+<p>Be respectful and constructive. BibleProject open source projects follow a standard
+contributor code of conduct. In short: treat everyone with kindness.</p>
+<hr>
+<p>Questions? Open an issue or reach out via the
+<a href="https://bibleproject.com">BibleProject website</a>.</p>
+
+    </article>
+  </div>
+  
+</div>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="https://bibleproject.com" target="_blank" rel="noopener noreferrer" aria-label="Visit BibleProject (opens in new tab)">
+        <img
+          src="/assets/images/bp-logo-white.svg"
+          alt="BibleProject"
+          width="28"
+          height="28"
+          class="footer-logo"
+        />
+      </a>
+      <p class="footer-tagline">
+        Open source resources from <a href="https://bibleproject.com" target="_blank" rel="noopener noreferrer">BibleProject</a>
+      </p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <ul role="list">
+        <li><a href="/repos/">Repos</a></li>
+        <li><a href="/downloads/">Downloads</a></li>
+        <li><a href="/docs/">Docs</a></li>
+        <li>
+          <a href="https://github.com/bibleproject" target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer-legal">
+    <p>
+      © BibleProject Open Source.
+      Content from BibleProject is used in accordance with their
+      <a href="https://bibleproject.com/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

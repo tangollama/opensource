@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How to use BibleProject open source fonts and assets in your project" />
+
+  <title>Getting Started — BibleProject Open Source</title>
+
+  <!-- Preconnect hints for any external resources -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Self-hosted fonts (place .woff2 files in /assets/fonts/) -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <!-- Syntax highlighting theme (injected by eleventy-plugin-syntaxhighlight) -->
+  <link rel="stylesheet" href="/assets/css/prism-theme.css" />
+
+  <!-- Favicon (replace with actual BP favicon) -->
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="site-logo" aria-label="BibleProject Open Source — Home">
+      <!-- BibleProject blue icon; swap src for the actual SVG/PNG from brand assets -->
+      <img
+        src="/assets/images/bp-logo.svg"
+        alt="BibleProject"
+        width="36"
+        height="36"
+        class="logo-icon"
+      />
+      <span class="logo-text">BibleProject <span class="logo-text--light">Open Source</span></span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+  <ul class="nav-list" role="list">
+    <li>
+      <a href="/repos/" class="nav-link">
+        Repos
+      </a>
+    </li>
+    <li>
+      <a href="/downloads/" class="nav-link">
+        Downloads
+      </a>
+    </li>
+    <li>
+      <a href="/docs/" class="nav-link nav-link--active">
+        Docs
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://github.com/bibleproject"
+        class="nav-link nav-link--external"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="BibleProject on GitHub (opens in new tab)"
+      >
+        GitHub ↗
+      </a>
+    </li>
+  </ul>
+</nav>
+
+  </div>
+</header>
+
+
+  <main id="main-content">
+    
+<div class="page-wrapper">
+  
+  <div class="page-with-sidebar">
+    <aside class="sidebar" aria-label="Documentation navigation">
+      
+<nav aria-label="Documentation pages">
+  <p class="sidebar-label">Documentation</p>
+  <ul class="sidebar-list" role="list">
+    
+    <li>
+      <a
+        href="/docs/"
+        class="sidebar-link"
+        
+      >
+        Documentation
+      </a>
+    </li>
+    
+    <li>
+      <a
+        href="/docs/getting-started/"
+        class="sidebar-link sidebar-link--active"
+        aria-current="page"
+      >
+        Getting Started
+      </a>
+    </li>
+    
+    <li>
+      <a
+        href="/docs/contributing/"
+        class="sidebar-link"
+        
+      >
+        Contributing
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+    </aside>
+    <article class="page-content prose">
+      
+      <h1>Getting Started</h1>
+      
+      <h2 id="overview" tabindex="-1"><a class="header-anchor" href="#overview">Overview</a></h2>
+<p>This guide walks through using the BibleProject font package in a web project.
+The fonts are self-hosted — no CDN dependency, no tracking.</p>
+<h2 id="prerequisites" tabindex="-1"><a class="header-anchor" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>A web project (any stack)</li>
+<li>Basic familiarity with CSS <code>@font-face</code></li>
+</ul>
+<h2 id="1-download-the-fonts" tabindex="-1"><a class="header-anchor" href="#1-download-the-fonts">1. Download the fonts</a></h2>
+<p>Go to the <a href="/downloads/">Downloads</a> page and grab the <strong>BibleProject Brand Fonts</strong> package.
+Unzip the archive — you’ll find <code>.woff2</code> files organized by family and weight.</p>
+<pre><code>bp-fonts/
+├── display/
+│   ├── BPDisplay-Regular.woff2
+│   ├── BPDisplay-Bold.woff2
+│   └── BPDisplay-ExtraBold.woff2
+└── body/
+    ├── BPBody-Regular.woff2
+    ├── BPBody-Medium.woff2
+    └── BPBody-Bold.woff2
+</code></pre>
+<h2 id="2-place-the-files" tabindex="-1"><a class="header-anchor" href="#2-place-the-files">2. Place the files</a></h2>
+<p>Copy the <code>.woff2</code> files into your project’s static assets directory, for example:</p>
+<pre><code>your-project/
+└── public/
+    └── fonts/
+        └── *.woff2
+</code></pre>
+<h2 id="3-declare-the-font-faces" tabindex="-1"><a class="header-anchor" href="#3-declare-the-font-faces">3. Declare the font faces</a></h2>
+<p>Add <code>@font-face</code> declarations to your global CSS:</p>
+<pre class="language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@font-face</span></span> <span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token string">"BP Display"</span><span class="token punctuation">;</span>
+  <span class="token property">src</span><span class="token punctuation">:</span> <span class="token url"><span class="token function">url</span><span class="token punctuation">(</span><span class="token string url">"/fonts/BPDisplay-Regular.woff2"</span><span class="token punctuation">)</span></span> <span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"woff2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">font-weight</span><span class="token punctuation">:</span> 400<span class="token punctuation">;</span>
+  <span class="token property">font-style</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+  <span class="token property">font-display</span><span class="token punctuation">:</span> swap<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token atrule"><span class="token rule">@font-face</span></span> <span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token string">"BP Display"</span><span class="token punctuation">;</span>
+  <span class="token property">src</span><span class="token punctuation">:</span> <span class="token url"><span class="token function">url</span><span class="token punctuation">(</span><span class="token string url">"/fonts/BPDisplay-Bold.woff2"</span><span class="token punctuation">)</span></span> <span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"woff2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">font-weight</span><span class="token punctuation">:</span> 700<span class="token punctuation">;</span>
+  <span class="token property">font-style</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+  <span class="token property">font-display</span><span class="token punctuation">:</span> swap<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token atrule"><span class="token rule">@font-face</span></span> <span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token string">"BP Body"</span><span class="token punctuation">;</span>
+  <span class="token property">src</span><span class="token punctuation">:</span> <span class="token url"><span class="token function">url</span><span class="token punctuation">(</span><span class="token string url">"/fonts/BPBody-Regular.woff2"</span><span class="token punctuation">)</span></span> <span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"woff2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">font-weight</span><span class="token punctuation">:</span> 400<span class="token punctuation">;</span>
+  <span class="token property">font-style</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+  <span class="token property">font-display</span><span class="token punctuation">:</span> swap<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<blockquote>
+<p><strong>Tip:</strong> <code>font-display: swap</code> ensures body text renders immediately in a fallback font
+while the custom font loads, improving perceived performance.</p>
+</blockquote>
+<h2 id="4-apply-the-fonts" tabindex="-1"><a class="header-anchor" href="#4-apply-the-fonts">4. Apply the fonts</a></h2>
+<pre class="language-css"><code class="language-css"><span class="token selector">:root</span> <span class="token punctuation">{</span>
+  <span class="token property">--font-heading</span><span class="token punctuation">:</span> <span class="token string">"BP Display"</span><span class="token punctuation">,</span> system-ui<span class="token punctuation">,</span> sans-serif<span class="token punctuation">;</span>
+  <span class="token property">--font-body</span><span class="token punctuation">:</span> <span class="token string">"BP Body"</span><span class="token punctuation">,</span> system-ui<span class="token punctuation">,</span> sans-serif<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">body</span> <span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--font-body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">h1, h2, h3</span> <span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--font-heading<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="attribution" tabindex="-1"><a class="header-anchor" href="#attribution">Attribution</a></h2>
+<p>When using BibleProject fonts in a public project, include a note in your documentation
+or about page:</p>
+<blockquote>
+<p>Fonts provided by <a href="https://bibleproject.com">BibleProject</a>.</p>
+</blockquote>
+<hr>
+<p>Next: <a href="/docs/contributing/">Contributing</a></p>
+
+    </article>
+  </div>
+  
+</div>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="https://bibleproject.com" target="_blank" rel="noopener noreferrer" aria-label="Visit BibleProject (opens in new tab)">
+        <img
+          src="/assets/images/bp-logo-white.svg"
+          alt="BibleProject"
+          width="28"
+          height="28"
+          class="footer-logo"
+        />
+      </a>
+      <p class="footer-tagline">
+        Open source resources from <a href="https://bibleproject.com" target="_blank" rel="noopener noreferrer">BibleProject</a>
+      </p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <ul role="list">
+        <li><a href="/repos/">Repos</a></li>
+        <li><a href="/downloads/">Downloads</a></li>
+        <li><a href="/docs/">Docs</a></li>
+        <li>
+          <a href="https://github.com/bibleproject" target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer-legal">
+    <p>
+      © BibleProject Open Source.
+      Content from BibleProject is used in accordance with their
+      <a href="https://bibleproject.com/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
