@@ -1,0 +1,402 @@
+/* ==========================================================================
+   Hero — BibleProject Open Source Home
+   ========================================================================== */
+
+:root {
+  --sidebar-w: 48px;
+  --font-graphik: 'Graphik', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --hero-bg: #1f192c;
+  --grid-line: #ffffff12;
+}
+
+/* --------------------------------------------------------------------------
+   Body reset for home layout
+   -------------------------------------------------------------------------- */
+
+.home-body {
+  background-color: var(--hero-bg);
+}
+
+.home-body > main {
+  /* No left margin — sidebar is a fixed overlay; content handles its own padding */
+  margin-left: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Top-left logo badge
+   -------------------------------------------------------------------------- */
+
+.site-logo-badge {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 32px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-graphik);
+  font-size: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease, background 150ms ease;
+}
+
+.site-logo-badge.is-visible {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-logo-badge:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.logo-badge-text strong {
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Full-height vertical grid lines — 7 lines = 6 equal columns, edge to edge
+   Matches the 1140px content container with 24px side gutters
+   -------------------------------------------------------------------------- */
+
+.site-vlines {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1140px, calc(100% - 48px)); /* 24px gutter each side, matches content padding */
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  mix-blend-mode: overlay;
+  overflow: visible;
+}
+
+.site-vlines line {
+  stroke: white;
+  stroke-width: 1;
+  stroke-opacity: 0.2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* --------------------------------------------------------------------------
+   Hero section
+   -------------------------------------------------------------------------- */
+
+.hero-page {
+  position: relative;
+  min-height: 120vh;
+  background-color: var(--hero-bg);
+  overflow: hidden;
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   Horizontal grid lines — top of hero, capped at 1200px
+   (6 rows = 6 bottom borders = 6 visible horizontal lines)
+   -------------------------------------------------------------------------- */
+
+.hero-hlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+.hero-hlines line {
+  stroke: white;
+  stroke-width: 2;
+  stroke-opacity: 0.2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* --------------------------------------------------------------------------
+   WebGL canvas container
+   -------------------------------------------------------------------------- */
+
+#hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1200px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#hero-bg canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+  background: linear-gradient(to bottom, transparent, var(--hero-bg));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* circles.png — overlay on top of everything in the hero */
+.hero-circles-overlay {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  width: 80%;
+  max-width: 900px;
+  height: auto;
+  pointer-events: none;
+  z-index: 5;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+}
+
+.hero-page.is-frozen .hero-circles-overlay {
+  mix-blend-mode: hard-light;
+  opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+   Hero typography
+   -------------------------------------------------------------------------- */
+
+/* "BibleProject" — horizontal label above the Open text */
+.svg-bibleproject {
+  font-family: var(--font-graphik);
+  font-size: clamp(18px, 46vw, 40px);
+  font-weight: 600;
+  fill: white;
+  letter-spacing: 0.0em;
+  dominant-baseline: hanging;
+  transform: translate(var(--headline-x), calc(var(--headline-y) - 24px));
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Mission section
+   ========================================================================== */
+
+.mission-section {
+  background-color: var(--hero-bg);
+  padding: 40px 24px 80px;
+}
+
+.mission-container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Starts invisible; JS adds .is-visible when element enters the viewport */
+.mission-text {
+  font-family: var(--font-graphik);
+  font-size: clamp(18px, 2.4vw, 34px);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 179, 247, 0.771) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.mission-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   SVG headline — mix-blend-mode works against WebGL canvas via SVG compositing
+   -------------------------------------------------------------------------- */
+
+:root {
+  --open-size:   clamp(100px, 19.5vw, 200px);
+  --source-size: clamp(88px,  19.5vw, 200px);
+  --headline-x:  max(24px, calc((100vw - 1140px) / 2));
+  --headline-y:  calc(6vh + 200px);
+}
+
+/* Open + Source SVG — blend mode toggles to normal on Enter */
+.hero-svg-text {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 4;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.hero-svg-text.is-frozen {
+  mix-blend-mode: normal;
+}
+
+.hero-svg-text.is-frozen .svg-open,
+.hero-svg-text.is-frozen .svg-source {
+  fill: white;
+}
+
+/* BibleProject SVG — always overlay, white fill, never toggled */
+.hero-svg-bp {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 4;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.svg-open,
+.svg-source {
+  font-family: var(--font-mono);
+  fill: white;
+  dominant-baseline: hanging;
+}
+
+.svg-open {
+  font-size: var(--open-size);
+  font-weight: 700;
+  transform: translate(var(--headline-x), var(--headline-y));
+}
+
+.svg-source {
+  font-size: var(--source-size);
+  font-weight: 400;
+  /* left-aligned with Open; drops below using Open's rendered line height (~0.88em) */
+  /* increase the multiplier to add more gap between Open and Source */
+  transform: translate(
+    var(--headline-x),
+    calc(var(--headline-y) + var(--open-size) * 0.9)
+  );
+}
+
+/* ==========================================================================
+   Projects section — scroll-animated text with hover reveal
+   ========================================================================== */
+
+.projects-section {
+  background-color: var(--hero-bg);
+  padding: 0 0 80vh;
+}
+
+.projects-container {
+  width: 100%;
+}
+
+.project-text {
+  font-family: var(--font-mono);
+  font-size: clamp(48px, 9vw, 130px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  padding: 0.4em max(24px, calc((100vw - 1140px) / 2));
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: default;
+}
+
+/* Project name — gradient fill animates from left on scroll via GSAP */
+.project-name {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0.85)) no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 0% 100%;
+}
+
+/* Hover reveal — clips in from center over the project name */
+.project-hover {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-size: 0.35em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
+  transition: clip-path cubic-bezier(.1,.5,.5,1) 0.4s;
+  display: flex;
+  align-items: center;
+  padding-left: calc(max(24px, calc((100vw - 1140px) / 2)) + 0.6em);
+}
+
+.project-text:hover .project-hover {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Per-project hover colors */
+.project-text:nth-child(1) .project-hover { background-color: #E05C3A; } /* Interview    — terracotta */
+.project-text:nth-child(2) .project-hover { background-color: #3D56D6; } /* Organization — blue      */
+.project-text:nth-child(3) .project-hover { background-color: #2E9E68; } /* Survey       — green     */
+.project-text:nth-child(4) .project-hover { background-color: #C49A2A; } /* Desert       — gold      */
+.project-text:nth-child(5) .project-hover { background-color: #8B4FD8; } /* Bible Data   — purple    */
+
+/* ==========================================================================
+   Hebrew letters — לִפְתוֹחַ ("to open")
+   Each letter uses background-clip: text to mask an image through the glyph.
+   Replace the gradient values with url('/assets/images/your-image.jpg') when ready.
+   ========================================================================== */
+
+.hebrew-section {
+  background-color: var(--hero-bg);
+  padding: 120px 0 160px;
+  overflow: hidden;
+}
+
+.hebrew-letters {
+  display: flex;
+  flex-direction: row-reverse; /* Hebrew reads right-to-left */
+  justify-content: flex-end; /* left-aligned in RTL = flex-end */
+  align-items: flex-start;
+  gap: 0.02em;
+  padding: 0 max(24px, calc((100vw - 1140px) / 2));
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hebrew-letter {
+  font-family: 'Heebo', 'Arial Hebrew', 'David', var(--font-graphik), serif;
+  font-size: clamp(140px, 22vw, 300px);
+  font-weight: 700;
+  line-height: 1;
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---- Letter images ---- */
+.h-pe    { background-image: url('/assets/images/letter-pe.png'); }
+.h-tav   { background-image: url('/assets/images/letter-tav.png'); }
+.h-chet  { background-image: url('/assets/images/letter-chet.png'); }
+
