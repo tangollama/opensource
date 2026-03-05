@@ -336,11 +336,22 @@ class LiquidGradientApp {
   }
 
   tick() {
+    if (this._paused) return;
     const delta = Math.min(this.clock.getDelta(), 0.1);
     this.touchTexture.update();
     this.gradientBackground.update(delta);
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(() => this.tick());
+  }
+
+  pause() {
+    this._paused = true;
+  }
+
+  resume() {
+    if (!this._paused) return;
+    this._paused = false;
+    this.tick();
   }
 
   onResize() {

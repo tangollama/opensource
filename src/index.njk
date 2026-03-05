@@ -4,6 +4,8 @@ title: Home
 description: Open source projects and resources from BibleProject
 ---
 
+<h1 class="sr-only">BibleProject Open Source</h1>
+
 {# ---- Hero ---- #}
 <section class="hero-page" aria-labelledby="hero-title" id="hero">
 
@@ -22,7 +24,7 @@ description: Open source projects and resources from BibleProject
   </div>
 
   {# circles.png overlay — mix-blend-mode: overlay #}
-  <img id="circles-image" src="/assets/images/circles.png" class="hero-circles-overlay" aria-hidden="true" />
+  <img id="circles-image" src="/assets/images/circles.png" class="hero-circles-overlay" loading="lazy" aria-hidden="true" />
 
   {# SVG headline — required for mix-blend-mode to composite against the WebGL canvas #}
   {# Open + Source — blend mode toggles to normal on Enter #}
@@ -122,7 +124,7 @@ description: Open source projects and resources from BibleProject
 {# ---- Hebrew Letters ---- #}
 {# Each span gets its own image mask. Swap the gradient in CSS for url('/assets/images/...') when ready. #}
 <section class="hebrew-section">
-  <a class="hebrew-letters" href="https://bibleproject.com" target="_blank" rel="noopener" aria-label="εἰσέρχομαι — Visit BibleProject">
+  <a class="hebrew-letters" href="https://bibleproject.com" target="_blank" rel="noopener noreferrer" aria-label="Visit BibleProject">
     <span class="hebrew-letter h-l1" aria-hidden="true">ε</span>
     <span class="hebrew-letter h-l2" aria-hidden="true">ἰ</span>
     <span class="hebrew-letter h-l3" aria-hidden="true">σ</span>

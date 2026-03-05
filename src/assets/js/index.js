@@ -203,7 +203,12 @@
     var heroBg = document.querySelector('#hero-bg');
     if (badge && heroBg) {
       var observer = new IntersectionObserver(function (entries) {
-        badge.classList.toggle('is-visible', !entries[0].isIntersecting);
+        var inView = entries[0].isIntersecting;
+        badge.classList.toggle('is-visible', !inView);
+        // Pause WebGL when hero scrolls out of view
+        if (window.heroGradientApp) {
+          inView ? window.heroGradientApp.resume() : window.heroGradientApp.pause();
+        }
       }, { threshold: 0 });
       observer.observe(heroBg);
     }
@@ -215,11 +220,18 @@
     openEl.textContent   = '';
     sourceEl.textContent = '';
 
+    var indent = '\u00a0\u00a0';
+
+    // Skip animation for users who prefer reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      openEl.textContent   = 'Open';
+      sourceEl.textContent = indent + 'Source';
+      window.heroAnimationComplete = true;
+      return;
+    }
+
     var initialDelay = 1800; // ms cursor blinks before typing begins
     var typeSpeed    = 130;  // ms per character
-
-    // Non-breaking spaces to indent final "Source" to the right
-    var indent = '\u00a0\u00a0';
 
     // Show blinking cursor on Open element before typing starts
     var preCursorVisible  = true;
@@ -235,7 +247,7 @@
       // 1. Type "Open" — cursor regular weight, removed immediately when done
       window.heroOpenTyper = Typer(openEl, { type: typeSpeed, loop: false, keepCursor: false }, ['Open']);
 
-      // 2. After Open finishes, start Source: <So → erase → <Source/> → erase → [indent]Source
+      // 2. After Open finishes, start Source: <Sou → erase → [indent]Source
       //    Cursor stays and blinks forever on Source
       var openDuration = 'Open'.length * typeSpeed + 500;
       setTimeout(function () {
@@ -329,7 +341,10 @@
       var bpEl     = document.querySelector('.svg-bibleproject');
 
       // Immediate: blend mode toggle, blob freeze, kill cursor
-      if (svgText)  svgText.classList.toggle('is-frozen', frozen);
+      if (svgText) {
+        svgText.classList.toggle('is-frozen', frozen);
+        svgText.setAttribute('aria-label', frozen ? 'קוד פתוח' : 'Open Source');
+      }
       if (heroPage) heroPage.classList.toggle('is-frozen', frozen);
       document.body.classList.toggle('theme-light', frozen);
 

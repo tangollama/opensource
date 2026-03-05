@@ -1,6 +1,19 @@
 /* ==========================================================================
-   Hero — BibleProject Open Source Home
+   BibleProject Open Source — Home
    ========================================================================== */
+
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 :root {
   --sidebar-w: 48px;
@@ -347,7 +360,7 @@
 
 .projects-section {
   background-color: var(--hero-bg);
-  padding: 0 0 80vh;
+  padding: 0 0 20vh;
 }
 
 .projects-container {
@@ -423,6 +436,16 @@
   text-decoration: none;
   display: inline-block;
   transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Button focus */
+.project-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+body.theme-light .project-btn:focus-visible {
+  outline-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Row hover — background fills with project color */
@@ -528,7 +551,7 @@ body.theme-light .project-text:hover .project-btn {
 
 .hebrew-section {
   background-color: var(--hero-bg);
-  padding: 120px 0 160px;
+  padding: 120px 0 60px;
   overflow: hidden;
   position: relative;
 }
