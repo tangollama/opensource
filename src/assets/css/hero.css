@@ -95,6 +95,7 @@
   min-height: 120vh;
   background-color: var(--hero-bg);
   overflow: hidden;
+  isolation: isolate;
   color: #fff;
 }
 
@@ -152,7 +153,7 @@
   z-index: 2;
 }
 
-/* circles.png — overlay on top of everything in the hero */
+/* circles.png — overlay behind hero text */
 .hero-circles-overlay {
   position: absolute;
   top: 45%;
@@ -161,7 +162,7 @@
   width: 80%;
   max-width: 900px;
   pointer-events: none;
-  z-index: 5;
+  z-index: 3;
   mix-blend-mode: overlay;
   opacity: 0.9;
   overflow: hidden;
@@ -255,12 +256,13 @@
 }
 
 .hero-svg-text.is-frozen {
-  mix-blend-mode: normal;
+  mix-blend-mode: overlay;
+  opacity: 0.7;
 }
 
 .hero-svg-text.is-frozen .svg-open,
 .hero-svg-text.is-frozen .svg-source {
-  fill: white;
+  fill: black;
 }
 
 /* BibleProject SVG — always overlay, white fill, never toggled */
@@ -321,7 +323,7 @@
 
 .return-hint {
   position: absolute;
-  left: calc(var(--headline-x) + var(--source-size) * 3.1);
+  left: calc(var(--headline-x) + var(--source-size) * 3.2);
   top: calc(var(--headline-y) + var(--open-size) * 0.7 + var(--source-size) * 0.95 + 20px);
   font-family: var(--font-mono);
   font-size: 19px;
@@ -424,11 +426,11 @@
 }
 
 /* Row hover — background fills with project color */
-.project-text:nth-child(1):hover { background-color: #F06028; }
-.project-text:nth-child(2):hover { background-color: #7B4FDD; }
-.project-text:nth-child(3):hover { background-color: #CC3468; }
-.project-text:nth-child(4):hover { background-color: #E0A820; }
-.project-text:nth-child(5):hover { background-color: #3D50CC; }
+.project-text:nth-child(1):hover { background-color: #E07828; }
+.project-text:nth-child(2):hover { background-color: #7850CC; }
+.project-text:nth-child(3):hover { background-color: #D83490; }
+.project-text:nth-child(4):hover { background-color: #3ACC58; }
+.project-text:nth-child(5):hover { background-color: #506ACC; }
 
 /* On hover: show white title — override background-clip with solid white */
 .project-text:hover .project-name {
@@ -448,18 +450,18 @@
   border-color: transparent;
 }
 
-.project-text:nth-child(1):hover .project-btn { color: #F06028; }
-.project-text:nth-child(2):hover .project-btn { color: #7B4FDD; }
-.project-text:nth-child(3):hover .project-btn { color: #CC3468; }
-.project-text:nth-child(4):hover .project-btn { color: #E0A820; }
-.project-text:nth-child(5):hover .project-btn { color: #3D50CC; }
+.project-text:nth-child(1):hover .project-btn { color: #E07828; }
+.project-text:nth-child(2):hover .project-btn { color: #7850CC; }
+.project-text:nth-child(3):hover .project-btn { color: #D83490; }
+.project-text:nth-child(4):hover .project-btn { color: #3ACC58; }
+.project-text:nth-child(5):hover .project-btn { color: #506ACC; }
 
 /* Scroll-fill gradient per project */
-.project-text:nth-child(1) .project-name { background-image: linear-gradient(to right, #F06028, #F06028); }
-.project-text:nth-child(2) .project-name { background-image: linear-gradient(to right, #7B4FDD, #7B4FDD); }
-.project-text:nth-child(3) .project-name { background-image: linear-gradient(to right, #CC3468, #CC3468); }
-.project-text:nth-child(4) .project-name { background-image: linear-gradient(to right, #E0A820, #E0A820); }
-.project-text:nth-child(5) .project-name { background-image: linear-gradient(to right, #3D50CC, #3D50CC); }
+.project-text:nth-child(1) .project-name { background-image: linear-gradient(to right, #E07828, #E07828); }
+.project-text:nth-child(2) .project-name { background-image: linear-gradient(to right, #7850CC, #7850CC); }
+.project-text:nth-child(3) .project-name { background-image: linear-gradient(to right, #D83490, #D83490); }
+.project-text:nth-child(4) .project-name { background-image: linear-gradient(to right, #3ACC58, #3ACC58); }
+.project-text:nth-child(5) .project-name { background-image: linear-gradient(to right, #506ACC, #506ACC); }
 
 /* Light mode */
 body.theme-light .project-text {
@@ -480,20 +482,42 @@ body.theme-light .project-btn {
   color: rgba(0, 0, 0, 0.35);
 }
 
-body.theme-light .project-text:nth-child(1):hover { background-color: #E8887A; }
-body.theme-light .project-text:nth-child(2):hover { background-color: #D4C058; }
-body.theme-light .project-text:nth-child(3):hover { background-color: #7AAED4; }
-body.theme-light .project-text:nth-child(4):hover { background-color: #72C8A0; }
-body.theme-light .project-text:nth-child(5):hover { background-color: #A87ED4; }
+body.theme-light .project-text:nth-child(1):hover { background-color: #EC9068; }
+body.theme-light .project-text:nth-child(2):hover { background-color: #AA80D4; }
+body.theme-light .project-text:nth-child(3):hover { background-color: #D870C0; }
+body.theme-light .project-text:nth-child(4):hover { background-color: #80D878; }
+body.theme-light .project-text:nth-child(5):hover { background-color: #8AB0E0; }
+
+body.theme-light .project-text:hover .project-name {
+  background-image: none;
+  -webkit-text-fill-color: #1a1008;
+  color: #1a1008;
+}
 
 body.theme-light .project-text:hover .project-desc {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(20, 12, 4, 0.75);
 }
 
 body.theme-light .project-text:hover .project-btn {
   background: #fff;
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   Projects — small viewport stack
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .project-text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6em;
+  }
+
+  .project-actions {
+    margin-top: 0.2em;
+  }
 }
 
 /* ==========================================================================
