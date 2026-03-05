@@ -128,8 +128,70 @@
     }
 
     play();
-    return { play: play, stop: stop };
+    return { play: play, stop: stop, stopCursor: stopCursor };
   }
+
+  /* --------------------------------------------------------------------------
+     SVGScramble — text scramble transition for SVG <text> elements
+     Uses tspan elements for per-character dud styling (no innerHTML in SVG)
+     -------------------------------------------------------------------------- */
+
+  function SVGScramble(el) {
+    this.el       = el;
+    this.chars    = '!<>-_\\/[]{}—=+*^?#';
+    this.frame    = 0;
+    this.frameReq = null;
+    this.queue    = [];
+    this.resolve  = null;
+    var self = this;
+    this._tick = function () { self._update(); };
+  }
+
+  SVGScramble.prototype.setText = function (newText) {
+    var self    = this;
+    var oldText = this.el.textContent;
+    var len     = Math.max(oldText.length, newText.length);
+    var promise = new Promise(function (resolve) { self.resolve = resolve; });
+    this.queue  = [];
+    for (var i = 0; i < len; i++) {
+      var start = Math.floor(Math.random() * 20);
+      var end   = start + Math.floor(Math.random() * 20) + 5;
+      this.queue.push({ from: oldText[i] || '', to: newText[i] || '', start: start, end: end, char: null });
+    }
+    cancelAnimationFrame(this.frameReq);
+    this.frame = 0;
+    this._update();
+    return promise;
+  };
+
+  SVGScramble.prototype._update = function () {
+    while (this.el.firstChild) this.el.removeChild(this.el.firstChild);
+    var complete = 0;
+    for (var i = 0; i < this.queue.length; i++) {
+      var q = this.queue[i];
+      if (this.frame >= q.end) {
+        complete++;
+        if (q.to) this.el.appendChild(document.createTextNode(q.to));
+      } else if (this.frame >= q.start) {
+        if (!q.char || Math.random() < 0.28) {
+          q.char = this.chars[Math.floor(Math.random() * this.chars.length)];
+          this.queue[i].char = q.char;
+        }
+        var tspan = document.createElementNS(SVG_NS, 'tspan');
+        tspan.setAttribute('fill-opacity', '0.35');
+        tspan.textContent = q.char;
+        this.el.appendChild(tspan);
+      } else {
+        if (q.from) this.el.appendChild(document.createTextNode(q.from));
+      }
+    }
+    if (complete === this.queue.length) {
+      if (this.resolve) this.resolve();
+    } else {
+      this.frameReq = requestAnimationFrame(this._tick);
+      this.frame++;
+    }
+  };
 
   /* --------------------------------------------------------------------------
      Boot
@@ -171,18 +233,23 @@
       clearInterval(preCursorInterval);
 
       // 1. Type "Open" — cursor regular weight, removed immediately when done
-      Typer(openEl, { type: typeSpeed, loop: false, keepCursor: false }, ['Open']);
+      window.heroOpenTyper = Typer(openEl, { type: typeSpeed, loop: false, keepCursor: false }, ['Open']);
 
-      // 2. After Open finishes, start Source: <Source /> → erase → [indent]Source
+      // 2. After Open finishes, start Source: <So → erase → <Source/> → erase → [indent]Source
       //    Cursor stays and blinks forever on Source
       var openDuration = 'Open'.length * typeSpeed + 500;
       setTimeout(function () {
-        Typer(sourceEl, {
+        window.heroSourceTyper = Typer(sourceEl, {
           type: typeSpeed, erase: 55, break: 900, loop: false, keepCursor: true,
-          onLastScene: function () { sourceEl.style.fontStyle = 'italic'; },
-          onComplete:  function () { window.heroAnimationComplete = true; }
+          onComplete:  function () {
+            window.heroAnimationComplete = true;
+            setTimeout(function () {
+              var hint = document.querySelector('.return-hint');
+              if (hint && !window.heroFreezeUsed) hint.classList.add('is-visible');
+            }, 800);
+          }
         }, [
-          '<Source />',
+          '<Sou',
           indent + 'Source'
         ]);
       }, openDuration);
@@ -239,24 +306,103 @@
      -------------------------------------------------------------------------- */
 
   function initEnterFreeze() {
+    var frozen    = false;
+    var animating = false;
+
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter') return;
       if (!window.heroAnimationComplete) return;
+      if (animating) return;
+      animating = true;
+
+      frozen = !frozen;
+      window.heroFreezeUsed = true;
+
+      // Hide return hint permanently on first Enter
+      var hint = document.querySelector('.return-hint');
+      if (hint) hint.classList.remove('is-visible');
 
       var svgText  = document.querySelector('.hero-svg-text');
       var heroPage = document.querySelector('.hero-page');
-      if (svgText)  svgText.classList.toggle('is-frozen');
-      if (heroPage) heroPage.classList.toggle('is-frozen');
+      var openEl   = document.querySelector('.svg-open');
+      var sourceEl = document.querySelector('.svg-source');
+      var bpEl     = document.querySelector('.svg-bibleproject');
 
-      // Freeze / unfreeze blobs
-      window.heroPaused = !window.heroPaused;
+      // Immediate: blend mode toggle, blob freeze, kill cursor
+      if (svgText)  svgText.classList.toggle('is-frozen', frozen);
+      if (heroPage) heroPage.classList.toggle('is-frozen', frozen);
+      document.body.classList.toggle('theme-light', frozen);
 
-      // Stop cursor immediately — flag prevents renderText from re-adding it
-      window.heroCursorFrozen = true;
-      var textEls = document.querySelectorAll('.hero-svg-text text');
-      textEls.forEach(function (el) {
-        var tspan = el.querySelector('tspan');
-        if (tspan) tspan.remove();
+      // Swap circles overlay image
+      var circlesImg = document.getElementById('circles-image');
+      if (circlesImg) circlesImg.src = frozen ? '/assets/images/circles-inverse.png' : '/assets/images/circles.png';
+
+      // Swap WebGL canvas colors to match theme
+      if (window.heroGradientApp) {
+        var app = window.heroGradientApp;
+        if (app.scene) {
+          app.scene.background = new THREE.Color(frozen ? '#f2ede6' : '#1f192c');
+        }
+        if (app.gradientBackground && app.gradientBackground.uniforms) {
+          var u = app.gradientBackground.uniforms;
+          if (frozen) {
+            // Light mode — barely-warm blobs on cream background
+            var cLight = new THREE.Color('#F7F0E8'); // near-bg warm white
+            var cWarm  = new THREE.Color('#EDD8C4'); // very light tan
+            u.uColor1.value.set(cLight.r, cLight.g, cLight.b);
+            u.uColor2.value.set(cWarm.r,  cWarm.g,  cWarm.b);
+            u.uColor3.value.set(cLight.r, cLight.g, cLight.b);
+            u.uColor4.value.set(cWarm.r,  cWarm.g,  cWarm.b);
+            u.uColor5.value.set(cLight.r, cLight.g, cLight.b);
+            u.uColor6.value.set(cWarm.r,  cWarm.g,  cWarm.b);
+            var cBase = new THREE.Color('#F2EDE6'); u.uDarkNavy.value.set(cBase.r, cBase.g, cBase.b);
+            u.uIntensity.value = 1.8;
+          } else {
+            // Dark mode — restore originals
+            var co = new THREE.Color('#F25922');
+            u.uColor1.value.set(co.r, co.g, co.b);
+            u.uColor3.value.set(co.r, co.g, co.b);
+            u.uColor5.value.set(co.r, co.g, co.b);
+            var c2 = new THREE.Color('#0A0E27'); u.uColor2.value.set(c2.r, c2.g, c2.b);
+            u.uColor4.value.set(c2.r, c2.g, c2.b);
+            u.uColor6.value.set(c2.r, c2.g, c2.b);
+            var cd = new THREE.Color('#06054A'); u.uDarkNavy.value.set(cd.r, cd.g, cd.b);
+            u.uIntensity.value = 3.0;
+          }
+        }
+      }
+      window.heroCursorFrozen = frozen;
+      if (window.heroSourceTyper) window.heroSourceTyper.stopCursor();
+      if (window.heroOpenTyper)   window.heroOpenTyper.stopCursor();
+
+      // Phase 1 — scramble current text OUT (left side / current position)
+      var out = [];
+      if (openEl)   out.push(new SVGScramble(openEl).setText(''));
+      if (sourceEl) out.push(new SVGScramble(sourceEl).setText(''));
+      if (bpEl)     out.push(new SVGScramble(bpEl).setText(''));
+
+      Promise.all(out).then(function () {
+        // Slide all elements to their new position (CSS transition handles animation)
+        if (openEl)   openEl.classList.toggle('is-frozen', frozen);
+        if (sourceEl) sourceEl.classList.toggle('is-frozen', frozen);
+        if (bpEl) {
+          bpEl.classList.toggle('is-frozen', frozen);
+          bpEl.style.fontFamily = frozen ? "'Heebo', sans-serif" : '';
+        }
+
+        // Phase 2 — scramble new text IN after position transition completes
+        setTimeout(function () {
+          var inText = frozen
+            ? { open: 'קוד', source: 'פתוח\u00a0\u00a0', bp: 'פרויקט המקרא' }
+            : { open: 'Open', source: '\u00a0\u00a0Source', bp: 'BibleProject' };
+
+          var inPromises = [];
+          if (openEl)   inPromises.push(new SVGScramble(openEl).setText(inText.open));
+          if (sourceEl) inPromises.push(new SVGScramble(sourceEl).setText(inText.source));
+          if (bpEl)     inPromises.push(new SVGScramble(bpEl).setText(inText.bp));
+
+          Promise.all(inPromises).then(function () { animating = false; });
+        }, 500); // match CSS transition duration
       });
     });
   }

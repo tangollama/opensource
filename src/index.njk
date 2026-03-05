@@ -22,7 +22,7 @@ description: Open source projects and resources from BibleProject
   </div>
 
   {# circles.png overlay — mix-blend-mode: overlay #}
-  <img src="/assets/images/circles.png" class="hero-circles-overlay" aria-hidden="true" />
+  <img id="circles-image" src="/assets/images/circles.png" class="hero-circles-overlay" aria-hidden="true" />
 
   {# SVG headline — required for mix-blend-mode to composite against the WebGL canvas #}
   {# Open + Source — blend mode toggles to normal on Enter #}
@@ -42,6 +42,8 @@ description: Open source projects and resources from BibleProject
     <text class="svg-bibleproject">BibleProject</text>
   </svg>
 
+  {# Return hint — fades in 2s after typing completes, hides on Enter #}
+  <div class="return-hint" aria-hidden="true">↵ Enter for light mode</div>
 
 </section>
 
@@ -60,28 +62,58 @@ description: Open source projects and resources from BibleProject
   <div class="projects-container">
 
     <div class="project-text">
-      <span class="project-hover">Document Kit</span>
-      <span class="project-name">Interview</span>
+      <div class="project-content">
+        <span class="project-name">Interview</span>
+        <p class="project-desc">A consolidated mono-repo of our interview process, including take-home challenges and evaluation rubrics. Demonstrates our engineering culture and values.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
     </div>
 
     <div class="project-text">
-      <span class="project-hover">Mission Playbook</span>
-      <span class="project-name">Organization</span>
+      <div class="project-content">
+        <span class="project-name">Organization</span>
+        <p class="project-desc">Our consolidated product playbook — mission, principles, guiding philosophy, frameworks (SLICC), org structure, best practices, doc templates, and favorite resources.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
     </div>
 
     <div class="project-text">
-      <span class="project-hover">Custom Font Family</span>
-      <span class="project-name">Surfer</span>
+      <div class="project-content">
+        <span class="project-name">Surfer</span>
+        <p class="project-desc">Custom typefaces used across BibleProject video productions.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
     </div>
 
     <div class="project-text">
-      <span class="project-hover">Custom Font Family</span>
-      <span class="project-name">Desert</span>
+      <div class="project-content">
+        <span class="project-name">Desert</span>
+        <p class="project-desc">Custom typeface designed for wilderness and ancient world visual themes.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
     </div>
 
     <div class="project-text">
-      <span class="project-hover">Coming Soon</span>
-      <span class="project-name">Bible Data</span>
+      <div class="project-content">
+        <span class="project-name">Bible Data</span>
+        <p class="project-desc">Open-access structured data: book/section structure, literary designs, word studies, and Guides in plain text. A starting point for meaningful, unique Bible data others can build on.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
     </div>
 
   </div>
@@ -90,9 +122,16 @@ description: Open source projects and resources from BibleProject
 {# ---- Hebrew Letters ---- #}
 {# Each span gets its own image mask. Swap the gradient in CSS for url('/assets/images/...') when ready. #}
 <section class="hebrew-section">
-  <a class="hebrew-letters" href="https://bibleproject.com" target="_blank" rel="noopener" aria-label="פָתַח — Visit BibleProject">
-    <span class="hebrew-letter h-pe"   aria-hidden="true">פָ</span>
-    <span class="hebrew-letter h-tav"  aria-hidden="true">תַ</span>
-    <span class="hebrew-letter h-chet" aria-hidden="true">ח</span>
+  <a class="hebrew-letters" href="https://bibleproject.com" target="_blank" rel="noopener" aria-label="εἰσέρχομαι — Visit BibleProject">
+    <span class="hebrew-letter h-l1" aria-hidden="true">ε</span>
+    <span class="hebrew-letter h-l2" aria-hidden="true">ἰ</span>
+    <span class="hebrew-letter h-l3" aria-hidden="true">σ</span>
+    <span class="hebrew-letter h-l4" aria-hidden="true">έ</span>
+    <span class="hebrew-letter h-l5" aria-hidden="true">ρ</span>
+    <span class="hebrew-letter h-l6" aria-hidden="true">χ</span>
+    <span class="hebrew-letter h-l7" aria-hidden="true">ο</span>
+    <span class="hebrew-letter h-l8" aria-hidden="true">μ</span>
+    <span class="hebrew-letter h-l9" aria-hidden="true">α</span>
+    <span class="hebrew-letter h-l10" aria-hidden="true">ι</span>
   </a>
 </section>

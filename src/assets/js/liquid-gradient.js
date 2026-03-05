@@ -120,7 +120,7 @@ class GradientBackground {
       uDarkNavy:      { value: hexColor('#06054A') },  // BASE/SHADOW — fills dark areas between blobs
 
       // --- Motion ---
-      uSpeed:         { value: 0.12 },   // overall animation speed — lower = slower (try 0.05–0.5)
+      uSpeed:         { value: 0.2 },   // overall animation speed — lower = slower (try 0.05–0.5)
 
       // --- Appearance ---
       uIntensity:     { value: 3.0 },    // brightness/contrast of the whole gradient (try 0.5–3.0)
@@ -313,7 +313,7 @@ class LiquidGradientApp {
     this.camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 10000);
     this.camera.position.z = 50;
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color('#19161D'); // Background color
+    this.scene.background = new THREE.Color('#1f192c'); // Match --hero-bg
     this.clock = new THREE.Clock();
 
     this.touchTexture = new TouchTexture();
@@ -357,7 +357,7 @@ function boot() {
   const container = document.getElementById('hero-bg');
   if (!container) return;
   // rAF ensures layout is calculated so the container has real dimensions
-  requestAnimationFrame(() => new LiquidGradientApp(container));
+  requestAnimationFrame(() => { window.heroGradientApp = new LiquidGradientApp(container); });
 }
 
 if (document.readyState === 'loading') {
