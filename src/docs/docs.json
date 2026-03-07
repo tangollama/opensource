@@ -1,5 +1,0 @@
-{
-  "layout": "layouts/page.njk",
-  "tags": ["docs"],
-  "showSidebar": true
-}
