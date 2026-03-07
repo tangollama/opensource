@@ -317,12 +317,22 @@
      - Removes blinking cursor
      -------------------------------------------------------------------------- */
 
+  var enterAudio = new Audio('/assets/audio/enter.wav');
+  var enterAudioLight = new Audio('/assets/audio/enter-light.wav');
+
+  function playEnterSound() {
+    var audio = document.body.classList.contains('theme-light') ? enterAudio : enterAudioLight;
+    audio.currentTime = 0;
+    audio.play();
+  }
+
   function initEnterFreeze() {
     var frozen    = false;
     var animating = false;
 
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter') return;
+      playEnterSound();
       if (!window.heroAnimationComplete) return;
       if (animating) return;
       animating = true;
