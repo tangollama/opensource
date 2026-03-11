@@ -371,9 +371,9 @@
         if (app.gradientBackground && app.gradientBackground.uniforms) {
           var u = app.gradientBackground.uniforms;
           if (frozen) {
-            // Light mode — barely-warm blobs on cream background
-            var cLight = new THREE.Color('#F7F0E8'); // near-bg warm white
-            var cWarm  = new THREE.Color('#EDD8C4'); // very light tan
+            // Light mode — inverted dark mode colors
+            var cLight = new THREE.Color('#0DA6DD'); // inverse of #F25922 orange → cyan
+            var cWarm  = new THREE.Color('#F5F1D8'); // inverse of #0A0E27 navy → warm cream
             u.uColor1.value.set(cLight.r, cLight.g, cLight.b);
             u.uColor2.value.set(cWarm.r,  cWarm.g,  cWarm.b);
             u.uColor3.value.set(cLight.r, cLight.g, cLight.b);
@@ -381,7 +381,9 @@
             u.uColor5.value.set(cLight.r, cLight.g, cLight.b);
             u.uColor6.value.set(cWarm.r,  cWarm.g,  cWarm.b);
             var cBase = new THREE.Color('#F2EDE6'); u.uDarkNavy.value.set(cBase.r, cBase.g, cBase.b);
-            u.uIntensity.value = 1.8;
+            u.uColor1Weight.value = 1.0;
+            u.uColor2Weight.value = 1.0;
+            u.uIntensity.value = 3.0;
           } else {
             // Dark mode — restore originals
             var co = new THREE.Color('#F25922');
@@ -392,6 +394,8 @@
             u.uColor4.value.set(c2.r, c2.g, c2.b);
             u.uColor6.value.set(c2.r, c2.g, c2.b);
             var cd = new THREE.Color('#06054A'); u.uDarkNavy.value.set(cd.r, cd.g, cd.b);
+            u.uColor1Weight.value = 0.2;
+            u.uColor2Weight.value = 1.2;
             u.uIntensity.value = 3.0;
           }
         }
@@ -432,13 +436,61 @@
     });
   }
 
+  /* --------------------------------------------------------------------------
+     syncBlobMask — aligns the Union.svg mask on #hero-bg to exactly match
+     the position and width of the circles overlay image.
+     -------------------------------------------------------------------------- */
+
+  var SVG_ASPECT = 2024 / 1211; // Union.svg intrinsic height / width
+
+  function syncBlobMask() {
+    var circles = document.querySelector('.hero-circles-overlay');
+    var heroBg  = document.getElementById('hero-bg');
+    if (!circles || !heroBg) return;
+
+    var cRect = circles.getBoundingClientRect();
+    var bRect = heroBg.getBoundingClientRect();
+
+    var maskW = cRect.width;
+    var maskH = maskW * SVG_ASPECT;
+
+    // Position mask so its center aligns with the circles image center,
+    // expressed as offsets relative to hero-bg's top-left corner.
+    var maskLeft = (cRect.left - bRect.left + cRect.width  / 2) - maskW / 2;
+    var maskTop  = (cRect.top  - bRect.top  + cRect.height / 2) - maskH / 2 + 15;
+
+    var pos  = maskLeft + 'px ' + maskTop + 'px';
+    var size = maskW + 'px ' + maskH + 'px';
+
+    heroBg.style.maskPosition        = pos;
+    heroBg.style.maskSize            = size;
+    heroBg.style.webkitMaskPosition  = pos;
+    heroBg.style.webkitMaskSize      = size;
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { boot(); initMission(); initProjects(); initEnterFreeze(); });
+    document.addEventListener('DOMContentLoaded', function () {
+      boot(); initMission(); initProjects(); initEnterFreeze();
+    });
   } else {
     boot();
     initMission();
     initProjects();
     initEnterFreeze();
+  }
+
+  // Sync after all resources (including circles image) are fully loaded and laid out
+  window.addEventListener('load', syncBlobMask);
+  window.addEventListener('resize', syncBlobMask);
+
+  // Also sync as soon as the circles image itself finishes loading
+  var circlesImg = document.getElementById('circles-image');
+  if (circlesImg) {
+    if (circlesImg.complete) {
+      syncBlobMask();
+    } else {
+      circlesImg.addEventListener('load', syncBlobMask);
+    }
   }
 
 })();

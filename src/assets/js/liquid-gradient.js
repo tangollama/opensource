@@ -120,15 +120,15 @@ class GradientBackground {
       uDarkNavy:      { value: hexColor('#06054A') },  // BASE/SHADOW — fills dark areas between blobs
 
       // --- Motion ---
-      uSpeed:         { value: 0.2 },   // overall animation speed — lower = slower (try 0.05–0.5)
+      uSpeed:         { value: 0.3 },   // overall animation speed — lower = slower (try 0.05–0.5)
 
       // --- Appearance ---
-      uIntensity:     { value: 3.0 },    // brightness/contrast of the whole gradient (try 0.5–3.0)
-      uGradientSize:  { value: 0.3 },   // blob softness/blur — larger = blobs bleed into each other more (try 0.2–0.8)
-      uGradientCount: { value: 6.0 },   // how many blobs are active: 6, 10, or 12
+      uIntensity:     { value: 2.0 },    // brightness/contrast of the whole gradient (try 0.5–3.0)
+      uGradientSize:  { value: 0.4 },   // blob softness/blur — larger = blobs bleed into each other more (try 0.2–0.8)
+      uGradientCount: { value: 12.0 },   // how many blobs are active: 6, 10, or 12
       uColor1Weight:  { value: 0.2 },    // brightness multiplier for odd-colored blobs (Color A/C/E)
       uColor2Weight:  { value: 1.2 },    // brightness multiplier for even-colored blobs (Color B/D/F)
-      uGrainIntensity:{ value: 0.06 },   // grain strength — how visible the film grain is (try 0–0.2; 0 = off)
+      uGrainIntensity:{ value: 0.08 },   // grain strength — how visible the film grain is (try 0–0.2; 0 = off)
       uZoom:          { value: 1.0 },    // not currently wired into shader — reserved
 
       uTouchTexture:  { value: null },   // internal — touch distortion map, don't touch
@@ -177,12 +177,12 @@ class GradientBackground {
           // -------------------------------------------------------------------
 
           // Active when uGradientCount >= 6  (always on):
-          vec2 c1  = vec2(0.55 + sin(time*uSpeed*0.40 + 0.00)*0.18, 0.85 + cos(time*uSpeed*0.50 + 1.30)*0.12); // COLOR A
-          vec2 c2  = vec2(0.45 + cos(time*uSpeed*0.60 + 2.10)*0.18, 0.75 + sin(time*uSpeed*0.45 + 0.80)*0.18); // COLOR B
-          vec2 c3  = vec2(0.60 + sin(time*uSpeed*0.35 + 3.50)*0.10, 0.65 + cos(time*uSpeed*0.55 + 1.90)*0.18); // COLOR C
-          vec2 c4  = vec2(0.40 + cos(time*uSpeed*0.50 + 0.60)*0.18, 0.90 + sin(time*uSpeed*0.40 + 4.20)*0.10); // COLOR D
-          vec2 c5  = vec2(0.58 + sin(time*uSpeed*0.70 + 2.80)*0.14, 0.60 + cos(time*uSpeed*0.60 + 0.40)*0.18); // COLOR E
-          vec2 c6  = vec2(0.48 + cos(time*uSpeed*0.45 + 5.10)*0.20, 0.80 + sin(time*uSpeed*0.65 + 1.50)*0.16); // COLOR F
+          vec2 c1  = vec2(0.50 + sin(time*uSpeed*0.40 + 0.00)*0.18, 0.70 + cos(time*uSpeed*0.50 + 1.30)*0.12); // COLOR A
+          vec2 c2  = vec2(0.48 + cos(time*uSpeed*0.60 + 2.10)*0.18, 0.62 + sin(time*uSpeed*0.45 + 0.80)*0.18); // COLOR B
+          vec2 c3  = vec2(0.52 + sin(time*uSpeed*0.35 + 3.50)*0.10, 0.55 + cos(time*uSpeed*0.55 + 1.90)*0.18); // COLOR C
+          vec2 c4  = vec2(0.45 + cos(time*uSpeed*0.50 + 0.60)*0.18, 0.72 + sin(time*uSpeed*0.40 + 4.20)*0.10); // COLOR D
+          vec2 c5  = vec2(0.53 + sin(time*uSpeed*0.70 + 2.80)*0.14, 0.52 + cos(time*uSpeed*0.60 + 0.40)*0.18); // COLOR E
+          vec2 c6  = vec2(0.47 + cos(time*uSpeed*0.45 + 5.10)*0.20, 0.65 + sin(time*uSpeed*0.65 + 1.50)*0.16); // COLOR F
           // Active when uGradientCount > 6  (set to 10 or 12 to enable):
           vec2 c7  = vec2(0.52 + sin(time*uSpeed*0.55 + 3.80)*0.18, 0.70 + cos(time*uSpeed*0.48 + 2.30)*0.20); // COLOR A
           vec2 c8  = vec2(0.42 + cos(time*uSpeed*0.65 + 0.90)*0.16, 0.88 + sin(time*uSpeed*0.52 + 4.70)*0.12); // COLOR B

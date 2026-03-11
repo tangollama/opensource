@@ -147,6 +147,10 @@
   height: 1200px;
   z-index: 0;
   pointer-events: none;
+  -webkit-mask-image: url('/assets/images/Union.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url('/assets/images/Union.svg');
+  mask-repeat: no-repeat;
 }
 
 #hero-bg canvas {
@@ -158,12 +162,15 @@
 #hero-fade {
   position: absolute;
   inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+body.theme-light #hero-fade {
   background:
     linear-gradient(to bottom, transparent 30%, var(--hero-bg) 65%),
     linear-gradient(to right,  var(--hero-bg) 0%, transparent 50%),
     linear-gradient(to left,   var(--hero-bg) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 2;
 }
 
 /* circles.png — overlay behind hero text */
@@ -627,7 +634,7 @@ body.theme-light {
 
 /* Hide WebGL canvas in light mode */
 body.theme-light #hero-bg {
-  opacity: 0;
+  opacity: 1;
 }
 
 /* Circles overlay — multiply blends against light bg */
