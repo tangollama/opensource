@@ -1,0 +1,705 @@
+/* ==========================================================================
+   BibleProject Open Source — Home
+   ========================================================================== */
+
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:root {
+  --sidebar-w: 48px;
+  --font-graphik: 'Graphik', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Cascadia Code', monospace;
+  --hero-bg: #1f192c;
+  --grid-line: #ffffff12;
+}
+
+/* --------------------------------------------------------------------------
+   Body reset for home layout
+   -------------------------------------------------------------------------- */
+
+.home-body {
+  background-color: var(--hero-bg);
+}
+
+.home-body > main {
+  /* No left margin — sidebar is a fixed overlay; content handles its own padding */
+  margin-left: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Top-left logo badge
+   -------------------------------------------------------------------------- */
+
+.site-logo-badge {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 32px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-graphik);
+  font-size: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease, background 150ms ease;
+}
+
+.site-logo-badge.is-visible {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-logo-badge:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.logo-badge-text strong {
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Full-height vertical grid lines — 7 lines = 6 equal columns, edge to edge
+   Matches the 1140px content container with 24px side gutters
+   -------------------------------------------------------------------------- */
+
+.site-vlines {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1140px, calc(100% - 48px)); /* 24px gutter each side, matches content padding */
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  mix-blend-mode: overlay;
+  overflow: visible;
+}
+
+.site-vlines line {
+  stroke: white;
+  stroke-width: 1;
+  stroke-opacity: 0.2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* --------------------------------------------------------------------------
+   Hero section
+   -------------------------------------------------------------------------- */
+
+.hero-page {
+  position: relative;
+  min-height: 120vh;
+  background-color: var(--hero-bg);
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   Horizontal grid lines — top of hero, capped at 1200px
+   (6 rows = 6 bottom borders = 6 visible horizontal lines)
+   -------------------------------------------------------------------------- */
+
+.hero-hlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+.hero-hlines line {
+  stroke: white;
+  stroke-width: 2;
+  stroke-opacity: 0.2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* --------------------------------------------------------------------------
+   WebGL canvas container
+   -------------------------------------------------------------------------- */
+
+#hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1200px;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: url('/assets/images/Union.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url('/assets/images/Union.svg');
+  mask-repeat: no-repeat;
+}
+
+#hero-bg canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#hero-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+body.theme-light #hero-fade {
+  background:
+    linear-gradient(to bottom, transparent 30%, var(--hero-bg) 65%),
+    linear-gradient(to right,  var(--hero-bg) 0%, transparent 50%),
+    linear-gradient(to left,   var(--hero-bg) 0%, transparent 50%);
+}
+
+/* circles.png — overlay behind hero text */
+.hero-circles-overlay {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  width: 80%;
+  max-width: 900px;
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: overlay;
+  opacity: 0.9;
+  overflow: hidden;
+}
+
+
+
+.hero-page.is-frozen .hero-circles-overlay {
+  mix-blend-mode: normal;
+  opacity: 1.0;
+}
+
+/* --------------------------------------------------------------------------
+   Hero typography
+   -------------------------------------------------------------------------- */
+
+/* "BibleProject" — horizontal label above the Open text */
+.svg-bibleproject {
+  font-family: var(--font-graphik);
+  font-size: clamp(18px, 46vw, 40px);
+  font-weight: 600;
+  fill: white;
+  letter-spacing: 0.0em;
+  dominant-baseline: hanging;
+  transform: translate(var(--headline-x), calc(var(--headline-y) - 48px));
+  opacity: 0.7;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.svg-bibleproject.is-frozen {
+  text-anchor: end;
+  transform: translate(calc(100vw - var(--headline-x)), calc(var(--headline-y) - 48px));
+}
+
+/* ==========================================================================
+   Mission section
+   ========================================================================== */
+
+.mission-section {
+  background-color: var(--hero-bg);
+  padding: 40px 24px 80px;
+}
+
+.mission-container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Starts invisible; JS adds .is-visible when element enters the viewport */
+.mission-text {
+  font-family: var(--font-graphik);
+  font-size: clamp(18px, 2.4vw, 34px);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 179, 247, 0.771) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.mission-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   SVG headline — mix-blend-mode works against WebGL canvas via SVG compositing
+   -------------------------------------------------------------------------- */
+
+:root {
+  --open-size:   clamp(100px, 19.5vw, 200px);
+  --source-size: clamp(88px,  19.5vw, 200px);
+  --headline-x:  max(24px, calc((100vw - 1140px) / 2));
+  --headline-y:  calc(6vh + 200px);
+}
+
+/* Open + Source SVG — blend mode toggles to normal on Enter */
+.hero-svg-text {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 4;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.hero-svg-text.is-frozen {
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+}
+
+.hero-svg-text.is-frozen .svg-open,
+.hero-svg-text.is-frozen .svg-source {
+  fill: black;
+}
+
+/* BibleProject SVG — always overlay, white fill, never toggled */
+.hero-svg-bp {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 4;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.svg-open,
+.svg-source {
+  font-family: var(--font-mono);
+  fill: white;
+  dominant-baseline: hanging;
+  direction: ltr;
+  unicode-bidi: bidi-override;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.svg-open {
+  font-size: var(--open-size);
+  font-weight: 700;
+  transform: translate(var(--headline-x), var(--headline-y));
+}
+
+.svg-open.is-frozen {
+  text-anchor: end;
+  transform: translate(calc(100vw - var(--headline-x)), var(--headline-y));
+}
+
+.svg-source {
+  font-size: var(--source-size);
+  font-weight: 700;
+  /* left-aligned with Open; drops below using Open's rendered line height (~0.88em) */
+  /* increase the multiplier to add more gap between Open and Source */
+  transform: translate(
+    var(--headline-x),
+    calc(var(--headline-y) + var(--open-size) * 0.9)
+  );
+}
+
+.svg-source.is-frozen {
+  text-anchor: end;
+  transform: translate(
+    calc(100vw - var(--headline-x)),
+    calc(var(--headline-y) + var(--open-size) * 0.9)
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Return hint — appears below "e" of Source after typing completes
+   -------------------------------------------------------------------------- */
+
+.return-hint {
+  position: absolute;
+  left: calc(var(--headline-x) + var(--source-size) * 3.2);
+  top: calc(var(--headline-y) + var(--open-size) * 0.7 + var(--source-size) * 0.95 + 20px);
+  font-family: var(--font-mono);
+  font-size: 19px;
+  font-weight: 400;
+  color: white;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  z-index: 6;
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.return-hint.is-visible {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Projects section — scroll-animated text with hover reveal
+   ========================================================================== */
+
+.projects-section {
+  background-color: var(--hero-bg);
+  padding: 0 0 30vh;
+}
+
+.projects-container {
+  width: 100%;
+}
+
+.project-text {
+  font-family: var(--font-mono);
+  font-size: clamp(40px, 7vw, 110px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  padding: 0.55em max(24px, calc((100vw - 1140px) / 2));
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2em;
+  cursor: default;
+  transition: background-color 0.25s ease;
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Project name — gradient fill animates from left on scroll via GSAP */
+.project-name {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0.85)) no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 0% 100%;
+}
+
+.project-desc {
+  font-family: var(--font-mono);
+  font-size: clamp(14px, 1.3vw, 19px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0.3em 0 0;
+  max-width: 600px;
+  letter-spacing: 0;
+}
+
+/* Buttons */
+.project-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.project-btn {
+  font-family: var(--font-mono);
+  font-size: clamp(14px, 1.1vw, 18px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 14px 28px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Button focus */
+.project-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+body.theme-light .project-btn:focus-visible {
+  outline-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Row hover — background fills with project color */
+.project-text:nth-child(1):hover { background-color: #E07828; }
+.project-text:nth-child(2):hover { background-color: #7850CC; }
+.project-text:nth-child(3):hover { background-color: #D83490; }
+.project-text:nth-child(4):hover { background-color: #3ACC58; }
+.project-text:nth-child(5):hover { background-color: #506ACC; }
+
+/* On hover: show white title — override background-clip with solid white */
+.project-text:hover .project-name {
+  background-image: none;
+  -webkit-text-fill-color: #fff;
+  color: #fff;
+}
+
+/* On hover: brighten description */
+.project-text:hover .project-desc {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* On hover: buttons go white with project color text */
+.project-text:hover .project-btn {
+  background: #fff;
+  border-color: transparent;
+}
+
+.project-text:nth-child(1):hover .project-btn { color: #E07828; }
+.project-text:nth-child(2):hover .project-btn { color: #7850CC; }
+.project-text:nth-child(3):hover .project-btn { color: #D83490; }
+.project-text:nth-child(4):hover .project-btn { color: #3ACC58; }
+.project-text:nth-child(5):hover .project-btn { color: #506ACC; }
+
+/* Scroll-fill gradient per project */
+.project-text:nth-child(1) .project-name { background-image: linear-gradient(to right, #E07828, #E07828); }
+.project-text:nth-child(2) .project-name { background-image: linear-gradient(to right, #7850CC, #7850CC); }
+.project-text:nth-child(3) .project-name { background-image: linear-gradient(to right, #D83490, #D83490); }
+.project-text:nth-child(4) .project-name { background-image: linear-gradient(to right, #3ACC58, #3ACC58); }
+.project-text:nth-child(5) .project-name { background-image: linear-gradient(to right, #506ACC, #506ACC); }
+
+/* Light mode */
+body.theme-light .project-text {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+body.theme-light .project-name {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.8)) !important;
+  color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light .project-desc {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+body.theme-light .project-btn {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.35);
+}
+
+body.theme-light .project-text:nth-child(1):hover { background-color: #EC9068; }
+body.theme-light .project-text:nth-child(2):hover { background-color: #AA80D4; }
+body.theme-light .project-text:nth-child(3):hover { background-color: #D870C0; }
+body.theme-light .project-text:nth-child(4):hover { background-color: #80D878; }
+body.theme-light .project-text:nth-child(5):hover { background-color: #8AB0E0; }
+
+body.theme-light .project-text:hover .project-name {
+  background-image: none;
+  -webkit-text-fill-color: #1a1008;
+  color: #1a1008;
+}
+
+body.theme-light .project-text:hover .project-desc {
+  color: rgba(20, 12, 4, 0.75);
+}
+
+body.theme-light .project-text:hover .project-btn {
+  background: #fff;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   Projects — small viewport stack
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .project-text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6em;
+  }
+
+  .project-actions {
+    margin-top: 0.2em;
+  }
+}
+
+/* ==========================================================================
+   Hebrew letters — לִפְתוֹחַ ("to open")
+   Each letter uses background-clip: text to mask an image through the glyph.
+   Replace the gradient values with url('/assets/images/your-image.jpg') when ready.
+   ========================================================================== */
+
+.hebrew-section {
+  background-color: var(--hero-bg);
+  padding: 120px 0 60px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hebrew-section::before,
+.hebrew-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hebrew-section::before {
+  left: 0;
+  background: linear-gradient(to right, var(--hero-bg) 0%, transparent 100%);
+}
+
+.hebrew-section::after {
+  right: 0;
+  background: linear-gradient(to left, var(--hero-bg) 0%, transparent 100%);
+}
+
+.hebrew-letters {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.02em;
+  padding: 0 max(24px, calc((100vw - 1140px) / 2));
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+}
+
+.hebrew-letter {
+  font-family: var(--font-mono);
+  font-size: clamp(60px, 10vw, 140px);
+  font-weight: 700;
+  line-height: 1;
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---- Letter images — one per character of εἰσέρχομαι ---- */
+.h-l1  { background-image: url('/assets/images/letter-pe.png'); }
+.h-l2  { background-image: url('/assets/images/letter-tav.png'); }
+.h-l3  { background-image: url('/assets/images/letter-chet.png'); }
+.h-l4  { background-image: url('/assets/images/letter-tabernacle.png'); }
+.h-l5  { background-image: url('/assets/images/letter-sermon.png'); }
+.h-l6  { background-image: url('/assets/images/letter-garden.png'); }
+.h-l7  { background-image: url('/assets/images/letter-tree.png'); }
+.h-l8  { background-image: url('/assets/images/letter-cross.png'); }
+.h-l9  { background-image: url('/assets/images/letter-people.png'); }
+.h-l10 { background-image: url('/assets/images/letter-exile.png'); }
+
+/* ==========================================================================
+   Light mode — toggled by body.theme-light on Enter key
+   ========================================================================== */
+
+
+body.theme-light {
+  --hero-bg: #f2ede6;
+  --grid-line: #00000010;
+}
+
+/* Hide WebGL canvas in light mode */
+body.theme-light #hero-bg {
+  opacity: 1;
+}
+
+/* Circles overlay — multiply blends against light bg */
+body.theme-light .hero-circles-overlay {
+  mix-blend-mode: multiply;
+  opacity: 0.18;
+}
+
+/* Grid lines — black with overlay on light */
+body.theme-light .site-vlines line,
+body.theme-light .hero-hlines line {
+  stroke: black;
+  stroke-opacity: 0.5;
+}
+
+/* Hero text — hard-light on light background */
+body.theme-light .hero-svg-text,
+body.theme-light .hero-svg-bp {
+  mix-blend-mode: hard-light;
+}
+
+body.theme-light .svg-open,
+body.theme-light .svg-source,
+body.theme-light .hero-svg-text.is-frozen .svg-open,
+body.theme-light .hero-svg-text.is-frozen .svg-source {
+  fill: #000;
+}
+
+body.theme-light .svg-bibleproject {
+  fill: #000;
+  opacity: 0.5;
+}
+
+/* Mission text — dark gradient */
+body.theme-light .mission-text {
+  background: linear-gradient(135deg, #231209 0%, #3D1E0A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Projects — invert colors */
+body.theme-light .project-text {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+  color: #1f192c;
+}
+
+body.theme-light .project-name {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+/* Light mode project palette — diverse hues, same soft saturation */
+body.theme-light .project-text:nth-child(1) .project-hover { background-color: #E8887A; } /* soft coral   */
+body.theme-light .project-text:nth-child(2) .project-hover { background-color: #D4C058; } /* soft gold    */
+body.theme-light .project-text:nth-child(3) .project-hover { background-color: #7AAED4; } /* sky blue     */
+body.theme-light .project-text:nth-child(4) .project-hover { background-color: #72C8A0; } /* mint         */
+body.theme-light .project-text:nth-child(5) .project-hover { background-color: #A87ED4; } /* soft violet  */
+
+body.theme-light .project-text:nth-child(1) .project-name { background-image: linear-gradient(to right, #E8887A, #E8887A); }
+body.theme-light .project-text:nth-child(2) .project-name { background-image: linear-gradient(to right, #D4C058, #D4C058); }
+body.theme-light .project-text:nth-child(3) .project-name { background-image: linear-gradient(to right, #7AAED4, #7AAED4); }
+body.theme-light .project-text:nth-child(4) .project-name { background-image: linear-gradient(to right, #72C8A0, #72C8A0); }
+body.theme-light .project-text:nth-child(5) .project-name { background-image: linear-gradient(to right, #A87ED4, #A87ED4); }
+
+/* Return hint */
+body.theme-light .return-hint {
+  mix-blend-mode: normal;
+  color: rgba(31, 25, 44, 0.35);
+}

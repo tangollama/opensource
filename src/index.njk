@@ -1,72 +1,138 @@
 ---
-layout: layouts/base.njk
+layout: layouts/home.njk
 title: Home
 description: Open source projects and resources from BibleProject
 ---
 
+<h1 class="sr-only">BibleProject Open Source</h1>
+
 {# ---- Hero ---- #}
-<section class="hero" aria-labelledby="hero-title">
-  <div class="container">
-    <img
-      src="/assets/images/bp-logo.svg"
-      alt="BibleProject"
-      width="72"
-      height="72"
-      class="hero-logo"
-    />
-    <h1 id="hero-title" class="hero-title">Open Source from BibleProject</h1>
-    <p class="hero-subtitle">
-      Fonts, icons, design tokens, and developer resources — free to use in your projects.
-    </p>
-    <div class="hero-cta">
-      <a href="/repos/" class="btn btn-primary">Browse Repos</a>
-      <a href="/docs/" class="btn btn-secondary">Read the Docs</a>
-    </div>
+<section class="hero-page" aria-labelledby="hero-title" id="hero">
+
+  {# Horizontal grid lines — SVG required for mix-blend-mode against WebGL canvas #}
+  <svg class="hero-hlines" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <line x1="0" y1="20%" x2="100%" y2="20%"/>
+    <line x1="0" y1="40%" x2="100%" y2="40%"/>
+    <line x1="0" y1="60%" x2="100%" y2="60%"/>
+    <line x1="0" y1="80%" x2="100%" y2="80%"/>
+    <line x1="0" y1="100%" x2="100%" y2="100%"/>
+  </svg>
+
+  {# WebGL liquid gradient background #}
+  <div id="hero-bg" aria-hidden="true">
+    <div id="hero-fade" aria-hidden="true"></div>
   </div>
+
+  {# circles.png overlay — mix-blend-mode: overlay #}
+  <img id="circles-image" src="/assets/images/circles.png" class="hero-circles-overlay" loading="lazy" aria-hidden="true" />
+
+  {# SVG headline — required for mix-blend-mode to composite against the WebGL canvas #}
+  {# Open + Source — blend mode toggles to normal on Enter #}
+  <svg
+    class="hero-svg-text"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Open Source"
+    id="hero-title"
+  >
+    <text class="svg-open">Open</text>
+    <text class="svg-source">Source</text>
+  </svg>
+
+  {# BibleProject — always overlay, never toggled #}
+  <svg class="hero-svg-bp" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <text class="svg-bibleproject">BibleProject</text>
+  </svg>
+
+  {# Return hint — fades in 2s after typing completes, hides on Enter #}
+  <div class="return-hint" aria-hidden="true">↵ Enter for light mode</div>
+
 </section>
 
 {# ---- Mission ---- #}
-<section class="mission-strip" aria-label="About BibleProject">
-  <div class="container">
-    <p>
-      <a href="{{ site.bpUrl }}" target="_blank" rel="noopener noreferrer">BibleProject</a>
-      is a nonprofit animation studio and Bible-education platform creating free resources
-      to help people experience the Bible as a unified story leading to Jesus.
-      This site hosts open source tools, fonts, and assets that developers and designers
-      can use in projects that share or reference BibleProject content.
+<section class="mission-section" id="mission">
+  <div class="mission-container">
+    <p class="mission-text">
+      BibleProject is a nonprofit animation studio and Bible-education platform creating free resources to help people experience the Bible as a unified story leading to Jesus.   </br></br>
+      This site hosts open source tools, fonts, and assets that developers and designers can use in projects that share or reference BibleProject content.
     </p>
   </div>
 </section>
 
-{# ---- Navigation Cards ---- #}
-<section aria-labelledby="resources-heading">
-  <div class="container">
-    <div class="nav-cards">
+{# ---- Projects ---- #}
+<section class="projects-section" id="projects">
+  <div class="projects-container">
 
-      <a href="/repos/" class="nav-card">
-        <span class="nav-card-icon" aria-hidden="true">📦</span>
-        <span class="nav-card-title">Repositories</span>
-        <span class="nav-card-desc">
-          Browse public GitHub repositories — fonts, design tokens, icon libraries, and more.
-        </span>
-      </a>
-
-      <a href="/downloads/" class="nav-card">
-        <span class="nav-card-icon" aria-hidden="true">⬇️</span>
-        <span class="nav-card-title">Downloads</span>
-        <span class="nav-card-desc">
-          Download brand assets directly: font packages, logo files, and other distributable resources.
-        </span>
-      </a>
-
-      <a href="/docs/" class="nav-card">
-        <span class="nav-card-icon" aria-hidden="true">📖</span>
-        <span class="nav-card-title">Documentation</span>
-        <span class="nav-card-desc">
-          Guides for getting started, integrating fonts, and contributing to BibleProject open source projects.
-        </span>
-      </a>
-
+    <div class="project-text">
+      <div class="project-content">
+        <span class="project-name">Interview</span>
+        <p class="project-desc">Our hiring mono-repo: take-home challenges, evaluation rubrics, and the full interview loop. A clear window into how we hire and what we value.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
     </div>
+
+    <div class="project-text">
+      <div class="project-content">
+        <span class="project-name">Organization</span>
+        <p class="project-desc">Our product playbook: vision, mission, values, product principles, and the operating frameworks that keep the team aligned.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
+    </div>
+
+    <div class="project-text">
+      <div class="project-content">
+        <span class="project-name">Surfer</span>
+        <p class="project-desc">A handcrafted BibleProject typeface with an easygoing, welcoming voice, designed for headlines that feel like an invitation.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
+    </div>
+
+    <div class="project-text">
+      <div class="project-content">
+        <span class="project-name">Passover</span>
+        <p class="project-desc">A handcrafted typeface created for our Passover video: a modern take on an ancient story of protection and deliverance.</p>
+      </div>
+      <div class="project-actions">
+        <a class="project-btn" href="#">Preview</a>
+        <a class="project-btn" href="#">Github</a>
+      </div>
+    </div>
+
+    <div class="project-text">
+      <div class="project-content">
+        <span class="project-name">Bible Data</span>
+        <p class="project-desc">Open-access structured Bible data: book and section structure, literary designs, word studies, and Guides in plain text. A foundation others can build on for meaningful Bible experiences.</p>
+      </div>
+      <div class="project-actions">
+        <span class="project-btn">Coming Soon</span>
+      </div>
+    </div>
+
   </div>
+</section>
+
+{# ---- Hebrew Letters ---- #}
+{# Each span gets its own image mask. Swap the gradient in CSS for url('/assets/images/...') when ready. #}
+<section class="hebrew-section">
+  <a class="hebrew-letters" href="https://bibleproject.com" target="_blank" rel="noopener noreferrer" aria-label="Visit BibleProject">
+    <span class="hebrew-letter h-l1" aria-hidden="true">ε</span>
+    <span class="hebrew-letter h-l2" aria-hidden="true">ἰ</span>
+    <span class="hebrew-letter h-l3" aria-hidden="true">σ</span>
+    <span class="hebrew-letter h-l4" aria-hidden="true">έ</span>
+    <span class="hebrew-letter h-l5" aria-hidden="true">ρ</span>
+    <span class="hebrew-letter h-l6" aria-hidden="true">χ</span>
+    <span class="hebrew-letter h-l7" aria-hidden="true">ο</span>
+    <span class="hebrew-letter h-l8" aria-hidden="true">μ</span>
+    <span class="hebrew-letter h-l9" aria-hidden="true">α</span>
+    <span class="hebrew-letter h-l10" aria-hidden="true">ι</span>
+  </a>
 </section>
